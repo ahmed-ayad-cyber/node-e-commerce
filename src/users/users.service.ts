@@ -33,16 +33,16 @@ class UsersService {
     deleteOne = refactorService.deleteOne<users>(usersSchema);
 
     uploadImage = uploadSingleFile(['image'], 'image')
-    saveImage = async(req: Request, res: Response, next: NextFunction) => {
+    saveImage = async (req: Request, res: Response, next: NextFunction) => {
         if (req.file) {
-            const filename: string = `product-${Date.now()}-cover.webp`
-            await sharp(req.files.cover[0].buffer)
+            const fileName: string = `user-${Date.now()}-image.webp`;
+            await sharp(req.file.buffer)
                 .resize(1200, 1200)
-                .webp({ quality: 95 })
-                .toFile(`uploades/images/products/${filename}`)
-            req.body.cover = filename
+                .webp({quality: 95})
+                .toFile(`uploades/images/users/${fileName}`);
+            req.body.image = fileName;
         }
-        next()
+        next();
     }
 }
 

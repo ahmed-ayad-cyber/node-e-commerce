@@ -7,10 +7,10 @@ import dbConnection from "./src/config/database";
 import mountRoutes from "./src";
 import hpp from 'hpp';
 
-dotenv.config();
 const app: express.Application = express();
 app.use(express.json({limit: '10kb'}));
 let server:Server;
+dotenv.config();
 i18n.configure({
     locales:['en','ar'],
     directory: path.join(__dirname,'locales'),
@@ -34,3 +34,5 @@ process.on('unhandledRejection', (err: Error) => {
         process.exit(1);
     })
 });
+
+console.log("Server Time:", new Date().toISOString());

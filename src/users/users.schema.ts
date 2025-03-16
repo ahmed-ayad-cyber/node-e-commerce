@@ -21,6 +21,7 @@ const usersSchema = new mongoose.Schema<users>({
 
 const imagesUrl= (document:users) => {
     if(document.image && document.image.startsWith('user')) document.image = `${process.env.BASE_URL}/images/users/${document.image}`
+    
 } 
 
 usersSchema
