@@ -12,7 +12,7 @@ class AuthService {
     signup = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
         const user = await usersSchema.create({
             username: req.body.username,
-            password: req.body.password,
+            password: req.body.password, 
             name: req.body.name,
             email: req.body.email,
             image: req.body.image
@@ -34,16 +34,10 @@ class AuthService {
         let token: string = '';
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
             token = req.headers.authorization.split(' ')[1];
-        else return next(new ApiErrors(`ahmed`, 401));
-        
-        console.log(`Extracted Token:${token}`);
-        
-        
+        else return next(new ApiErrors(`${req.__('check_login')}`, 401));
         const decoded: any = await jwt.verify(token, process.env.JWT_KEY!);
         const user = await usersSchema.findById(decoded._id);
         if (!user) return next(new ApiErrors(`${req.__('check_login')}`, 401));
-        
-        console.log("Extracted decod:", decoded);
         if (user.passwordChangedAt instanceof Date) {
             const changedPasswordTime: number = Math.trunc(user.passwordChangedAt.getTime() / 1000);
             if (changedPasswordTime > decoded.iat) return next(new ApiErrors(`${req.__('check_password_changed')}`, 401));

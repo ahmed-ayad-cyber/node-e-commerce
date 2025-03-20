@@ -5,8 +5,8 @@ import globalErrors from './middlewares/erorrs.middleWare';
 import ApiErrors from './utils/apisErorrs';
 import productsRoute from './products/products.route';
 import usersRoute from './users/users.route';
-import { users } from './users/users.interface';
 import authRoute from './auth/auth.route';
+import profileroute from './profile/profile.route';
 
 declare module "express" {
     interface Request {
@@ -22,6 +22,7 @@ const mountRoutes = (app: express.Application) => {
     app.use('/api/v1/products', productsRoute);
     app.use('/api/v1/auth', authRoute);
     app.use('/api/v1/users', usersRoute);
+    app.use('/api/v1/profile', profileroute);
     app.all('*',(req:express.Request,res:express.Response,next:NextFunction)=>{
         next(new ApiErrors (`route ${req.originalUrl} not found`,400))
     })

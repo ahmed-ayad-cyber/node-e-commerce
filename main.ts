@@ -35,4 +35,4 @@ process.on('unhandledRejection', (err: Error) => {
     })
 });
 
-console.log("Server Time:", new Date().toISOString());
+
