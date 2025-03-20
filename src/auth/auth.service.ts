@@ -46,6 +46,13 @@ class AuthService {
         next();
     })
 
+    sendEmail = asyncHandler(async (req: Request, res: Response, next: NextFunction) =>{
+        const user = await usersSchema.find({email:req.body.email})
+        if(!user) return next(new ApiErrors(`${req.__('check_email')}`,404))
+        const restcode = Math.floor(100000 + Math.random() * 900000).toString()
+        const cryptedCode = await bcrypt.hash(restcode,13)
+    })
+
     allowedTo = (...roles: string[]) =>
         asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
         if (!roles.includes(req.user.role)) return next(new ApiErrors(`${req.__('allowed_to')}`, 403));
