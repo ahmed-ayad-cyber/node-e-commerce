@@ -24,7 +24,8 @@ class AuthService {
 
     login = asyncHandler( async (req: Request, res: Response, next: NextFunction)=>{
         const user = await usersSchema.findOne(
-            {$or: [{username: req.body.username}, {email: req.body.email}]})
+            {$or: [{email: req.body.email},{username: req.body.username}]}
+        )
         if(!user || user.hasPassword ==false || !(await bcrypt.compare(req.body.password,user.password)))
             return next (new ApiErrors(`${req.__('invalid_login')}`,400))
         const token = createTokens.accessToken(user._id, user.role);

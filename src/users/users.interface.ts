@@ -7,7 +7,7 @@ export interface users extends Document {
     password: string;
     readonly role: Role;
     readonly active: boolean;
-    readonly googleId: string;
+    googleId: string;
     hasPassword: boolean;
     passwordChangedAt: Date | number;
     passwordResetCode: string | undefined;

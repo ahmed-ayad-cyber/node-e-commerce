@@ -3,7 +3,7 @@ import {users} from "./users.interface";
 import bcrypt from 'bcryptjs'
 
 const usersSchema = new mongoose.Schema<users>({
-    username:{type:String,required:true,unique:true},
+    username:{type:String,unique:true},
     email:{type:String,required:true,unique:true},
     name: {type: String, required: true},
     active: {type: Boolean, default: true},

@@ -7,6 +7,7 @@ import productsRoute from './products/products.route';
 import usersRoute from './users/users.route';
 import authRoute from './auth/auth.route';
 import profileroute from './profile/profile.route';
+import googleRoute from './google/google.route';
 
 declare module "express" {
     interface Request {
@@ -17,6 +18,7 @@ declare module "express" {
 }
 
 const mountRoutes = (app: express.Application) => {
+    app.use('/auth/google', googleRoute);
     app.use('/api/v1/categories', categoriesRoute);
     app.use('/api/v1/subcategories', subcategoriesRoute);
     app.use('/api/v1/products', productsRoute);

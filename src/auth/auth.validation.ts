@@ -35,7 +35,13 @@ class AuthValidation {
         validatorMiddleware
     ]
     login = [
-        body('username').notEmpty().withMessage((val, {req}) => req.__('validation_field')),
+        // body('username').notEmpty().withMessage((val, {req}) => req.__('validation_field')),
+        body().custom((value, { req }) => {
+            if (!req.body.username && !req.body.email) {
+                throw new Error(req.__('validation_field')); // رسالة خطأ عامة إذا لم يتم إدخال أي منهما
+            }
+            return true;
+        }),
         body('password')
             .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
             .isLength({min: 6, max: 20}).withMessage((val, {req}) => req.__('validation_length_password')),
